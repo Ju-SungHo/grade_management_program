@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 // Maximum Sizes
 #define MAX_NAME_LEN 31

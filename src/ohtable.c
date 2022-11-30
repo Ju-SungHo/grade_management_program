@@ -1,5 +1,7 @@
 #include "ohtable.h"
 
+static STUDENT vacated_mem = {1};
+
 __uint64 _hash1(__uint64 key)
 {
 	key += (key<<12);
@@ -14,6 +16,7 @@ __uint64 _hash1(__uint64 key)
 	return key;
 }
 
+
 __uint64 _hash2(__uint64 key)
 {
 	key = ~key + (key << 21);	// key = (key << 21) - key - 1
@@ -27,12 +30,66 @@ __uint64 _hash2(__uint64 key)
 	return key;
 }
 
-__uint64 _match(__uint64 val1, __uint64 val2)
+
+static inline __uint64 _match(__uint64 val1, __uint64 val2)
 {
     return val1 - val2;
 }
 
-static STUDENT vacated_mem = {1};
+
+void print_table(OHTBL* htbl)
+{
+    __uint64 count=0;
+
+    printf("table size = %lld\n",htbl->positions);
+    for(__uint64 i=0; i<(htbl->positions); i++)
+    {
+        if(htbl->table[i].id != 0 && htbl->table[i].id != vacated_mem.id)
+        {
+            printf("slot[%lld] = %lld\t", i,htbl->table[i].id);
+            printf("%-30s\t\n",htbl->table[i].name);
+            count++;
+        }
+        else
+            printf("slot[%lld] = vacated slot\n", i);
+    }
+}
+
+
+int _ohtbl_resizing(OHTBL* htbl)
+{
+    __uint64 count=0;
+    __uint64 pos=0;
+    __uint64 old_positions = htbl->positions;
+
+    htbl->positions = (htbl->positions) * 4;
+    
+    if( (realloc(htbl->table, (htbl->positions) * sizeof(STUDENT))) == NULL)
+        return ERROR;
+    
+    // initialize new slots
+    for(__uint64 i=old_positions; i<htbl->positions; i++)
+        htbl->table[i].id = 0;
+
+    // rehashing
+    for(__uint64 i=0; i<old_positions; i++)
+    {
+        if(htbl->table[i].id != 0 && htbl->table[i].id != vacated_mem.id)
+        {    
+            pos = ohtbl_insert(htbl,&htbl->table[i]);
+            
+            // Set the original id of slot to vacated state when index change
+            if(pos != i)
+                htbl->table[i].id = vacated_mem.id;
+
+            count++;
+        }
+        if(count == htbl->size)
+            break;
+    }
+    return NO_ERROR;
+}
+
 
 int ohtbl_init(OHTBL* htbl, __uint64 positions)
 {
@@ -46,13 +103,10 @@ int ohtbl_init(OHTBL* htbl, __uint64 positions)
 
 __uint64 ohtbl_insert(OHTBL* htbl, STUDENT* data)
 {
-    STUDENT* tmp = data;
     __uint64 position;
-    __uint64 err;
 
-    if(htbl->size == htbl->positions)
-        ohtbl_resizing(htbl);
-    
+    if( (htbl->size/(float)(htbl->positions)) >= htbl->factor )
+        _ohtbl_resizing(htbl);
     
     for(__uint64 i=0; i<htbl->positions; i++)
     {
@@ -112,42 +166,4 @@ __uint64 ohtbl_lookup(OHTBL* htbl, __uint64 search_id)
         }
     }
     return NOT_FOUND;
-}
-
-int ohtbl_resizing(OHTBL* htbl)
-{
-    __uint64 count=0;
-    __uint64 i=0;
-
-    htbl->positions = (htbl->positions) * 4;
-    if( (realloc(htbl->table, (htbl->positions) * sizeof(STUDENT))) == NULL)
-        return ERROR;
-    
-    // rehashing
-    while(count <= htbl->size)
-    {
-        if(htbl->table[i].id != 0 && htbl->table[i].id != vacated_mem.id)
-        {    
-            ohtbl_insert(htbl,&htbl->table[i]);
-            count++;
-        }
-        i++;
-    }
-    return NO_ERROR;
-}
-
-void print_table(OHTBL* htbl)
-{
-    __uint64 count=0;
-    __uint64 i=0;
-
-    while(count < htbl->size)
-    {
-        if(htbl->table[i].id != 0 && htbl->table[i].id != vacated_mem.id)
-        {
-            printf("slot[%lld] = %lld\n", i,htbl->table[i].id);
-            count++;
-        }
-        i++;
-    }
 }
