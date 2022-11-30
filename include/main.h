@@ -13,11 +13,17 @@
 #define NO_DATA 0
 #define NO_ERROR 1
 
+#define FOUND 2
+#define NOT_FOUND -2
+
+
+typedef unsigned long long __uint64;
+
 typedef struct _student{
-    int ID;
+    __uint64 id;
     char name[MAX_NAME_LEN];
-    float Grade[3]; // 0:kor, 1:eng, 2:math
-    float Average;
+    float grade[3]; // 0:kor, 1:eng, 2:math
+    float average;
 } STUDENT;
 
 char exit_flag;
