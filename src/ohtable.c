@@ -41,7 +41,6 @@ int ohtbl_init(OHTBL* htbl, __uint64 positions)
     
     if( (htbl->table = (STUDENT*)calloc(htbl->positions,sizeof(STUDENT)) ) == NULL)
         return ERROR;
-    
     return NO_ERROR;
 }
 
@@ -49,13 +48,12 @@ __uint64 ohtbl_insert(OHTBL* htbl, STUDENT* data)
 {
     STUDENT* tmp = data;
     __uint64 position;
+    __uint64 err;
 
     if(htbl->size == htbl->positions)
         ohtbl_resizing(htbl);
     
-    if(ohtbl_lookup(htbl, tmp->id) == 0)
-        return FOUND;
-
+    
     for(__uint64 i=0; i<htbl->positions; i++)
     {
         position = ( _hash1(data->id) + (i * _hash2(data->id)) ) % htbl->positions;
@@ -64,7 +62,7 @@ __uint64 ohtbl_insert(OHTBL* htbl, STUDENT* data)
         {
             htbl->table[position] = *data;
             htbl->size++;
-            return position;
+            return position;    //넣은 위치
         }
     }
     return ERROR;
@@ -138,4 +136,18 @@ int ohtbl_resizing(OHTBL* htbl)
     return NO_ERROR;
 }
 
-//void ohtbl_destroy(OHTBL* htbl);
+void print_table(OHTBL* htbl)
+{
+    __uint64 count=0;
+    __uint64 i=0;
+
+    while(count < htbl->size)
+    {
+        if(htbl->table[i].id != 0 && htbl->table[i].id != vacated_mem.id)
+        {
+            printf("slot[%lld] = %lld\n", i,htbl->table[i].id);
+            count++;
+        }
+        i++;
+    }
+}

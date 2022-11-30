@@ -17,13 +17,15 @@ typedef struct _ohtbl
 }   OHTBL;
 
 int ohtbl_init(OHTBL* htbl, __uint64 positions);
+int ohtbl_resizing(OHTBL* htbl);
+void print_table(OHTBL* htbl);
 
 __uint64 ohtbl_insert(OHTBL* htbl, STUDENT* data);
 __uint64 obtbl_remove(OHTBL* htbl, __uint64 remove_id);
-
 __uint64 ohtbl_lookup(OHTBL* htbl, __uint64 search_id);
-int ohtbl_resizing(OHTBL* htbl);
-//void ohtbl_destroy(OHTBL* htbl);
+
+
+
 #define ohtbl_size ((htbl)->size)
 
 
