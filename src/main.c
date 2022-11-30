@@ -12,7 +12,7 @@ int main()
     long long num;
 
     STUDENT* member=NULL;
-    
+    /*
     if((err = init(&member, filename, &num)) == ERROR)
     {
         fprintf(stderr,"Can't Open \"%s\" file \n", filename);
@@ -46,5 +46,6 @@ int main()
                 break;
         }
     }
+    */
     return 0;
 }
