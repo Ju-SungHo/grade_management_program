@@ -11,11 +11,10 @@
 
 // Return States
 #define ERROR -1
-#define NO_DATA 0
-#define NO_ERROR 1
-
-#define FOUND 2
 #define NOT_FOUND -2
+#define FOUND -3
+#define NO_DATA -4
+#define NO_ERROR 0
 
 
 typedef unsigned long long __uint64;
