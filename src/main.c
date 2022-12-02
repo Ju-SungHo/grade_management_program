@@ -1,102 +1,60 @@
 #include "main.h"
 #include "ohtable.h"
-
-int file_read(STUDENT** file_mem,char* filename, __uint64* num);
+#include "manage.h"
+#include "quick.h"
+#include "print.h"
 
 int main()
 {
     char* filename = "student_data.txt";
-    int err=0;
-
+    int menu;
+    int err;
+    
     OHTBL htbl;
-    STUDENT* member=NULL;
-    __uint64 num;
-
-    file_read(&member, filename, &num);
-
-    // Create Open Addressing Hash Table test
-    ohtbl_init(&htbl, num);
-    for(__uint64 i=0; i<num; i++)
-    {
-        err = ohtbl_insert(&htbl,&member[i]);
-        if(err == ERROR)
-        {    
-            printf("ERROR");
-            return ERROR;
-        }
-    }
-    print_table(&htbl);
-    free(member);
-
-
-    // Resizing test
-    member = (STUDENT*)calloc(1,sizeof(STUDENT));
-    member->name[1] = '\0';
-
-    for(__uint64 i=0; i<70; i++)
-    {
-        member->id = 20171001+i;
-        member->name[0] = 'A'+ (i%26);
-
-        err = ohtbl_insert(&htbl,member);
-        if(err == ERROR)
-        {    
-            printf("ERROR");
-            return ERROR;
-        }
-        
-    }
-    print_table(&htbl);
     
-    // Remove test from 1001 to 1020
-    for(__uint64 i=0; i<20; i++)
+    printf("==========================================\n");
+    printf("*         학생 성적 관리 프로그램        *\n");
+    printf("==========================================\n\n");
+
+    if(init(&htbl, filename) == ERROR)
+        return ERROR;
+
+    while(!exit_flag)
     {
-        member->id = 20171001+i;
+        menu = print_menu();
 
-        err = obtbl_remove(&htbl,member->id);
-        if(err == ERROR)
-        {    
-            printf("ERROR");
-            return ERROR;
+        switch(menu)
+        {
+            case 1:
+                print_student(&htbl);
+                break;
+            case 2:
+                err = insert_student(&htbl);
+                if(err == ERROR)
+                    return ERROR;
+                update_flag = 1;
+                break;
+            case 3:
+                err = remove_student(&htbl);
+                if(err == ERROR)
+                    return ERROR;
+                update_flag = 1;
+                break;
+            case 4:
+                err = exit_program(&htbl,filename);
+                if(err == ERROR)
+                {
+                    printf("%s 파일은 열 수 없습니다.",filename);
+                    return ERROR;
+                }
+                exit_flag = 1;
+                break;
+            default:
+                printf("해당 메뉴는 없습니다. 다시 입력하세요.\n\n");
+                break;
         }
-        
     }
-    print_table(&htbl);
 
-    free(member);
-    free(htbl.table);
-    
 
     return 0;
 }
-
-int file_read(STUDENT** file_mem,char* filename, __uint64* num)
-{
-    FILE* fp;
-    STUDENT* tmp=NULL;
-
-    if((fp = fopen(filename, "r")) == NULL)
-        return ERROR;
-    
-    fscanf(fp,"%lld%*c",num);
-
-    tmp = (STUDENT*)malloc(sizeof(STUDENT)*(*num));
-     for(int i=0; i<(*num); i++)
-    {
-        fscanf(fp,"%lld%%*c",&tmp[i].id);
-        fscanf(fp,"%[^|]%*c", tmp[i].name);
-    
-        for(int j=0; j<MAX_GRADE_NUM; j++)
-        {
-            fscanf(fp,"%f", &tmp[i].grade[j]);
-        }
-        fscanf(fp,"%f",&tmp[i].average);
-    }
-
-    *file_mem = tmp;
-
-    fclose(fp);
-    return NO_ERROR;
-}
-
-

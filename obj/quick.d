@@ -1,5 +1,5 @@
-obj/main.o: src/main.c /usr/include/stdc-predef.h include/main.h \
- /usr/include/stdio.h \
+obj/quick.o: src/quick.c /usr/include/stdc-predef.h include/quick.h \
+ include/main.h /usr/include/stdio.h \
  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
  /usr/include/features.h /usr/include/x86_64-linux-gnu/sys/cdefs.h \
  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
@@ -46,6 +46,4 @@ obj/main.o: src/main.c /usr/include/stdc-predef.h include/main.h \
  /usr/include/string.h \
  /usr/include/x86_64-linux-gnu/bits/types/locale_t.h \
  /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h \
- /usr/include/strings.h include/ohtable.h include/main.h include/manage.h \
- include/ohtable.h include/quick.h include/manage.h include/print.h \
- include/quick.h
+ /usr/include/strings.h include/manage.h include/ohtable.h

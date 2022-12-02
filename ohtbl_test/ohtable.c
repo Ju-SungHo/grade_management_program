@@ -1,4 +1,5 @@
 #include "ohtable.h"
+#define COEFFICIENT 2
 
 static STUDENT vacated_mem = {1};
 
@@ -30,6 +31,19 @@ __uint64 _hash2(__uint64 key)
 	return key;
 }
 
+/*
+unsigned int _hash2(__uint64 key)
+{
+	key = ~key + (key << 18);	// key = (key << 18) - key - 1
+	key ^= (key >> 31);
+	key += (key << 2) + (key << 4);	// key = key * 21
+	key ^= (key >> 11);
+	key += (key << 6);
+	key ^= (key >> 22);
+
+	return (unsigned int)key;
+}
+*/
 
 static inline __uint64 _match(__uint64 val1, __uint64 val2)
 {
@@ -58,34 +72,30 @@ __uint64 _ohtbl_resizing_insert(OHTBL* htbl, STUDENT* data)
 
 int _ohtbl_resizing(OHTBL* htbl)
 {
-    __uint64 pos=0;
+    STUDENT* old_table=htbl->table;
     __uint64 old_positions = htbl->positions;
+    __uint64 pos=0;
 
     htbl->size=0;
-    htbl->positions = (htbl->positions) * 4;
-    
-    if( (realloc(htbl->table, (htbl->positions) * sizeof(STUDENT))) == NULL)
-        return ERROR;
-    
-    // initialize new slots
-    for(__uint64 i=old_positions; i<htbl->positions; i++)
-        htbl->table[i].id = 0;
+    htbl->positions = (htbl->positions) * COEFFICIENT;
+
+    htbl->table = (STUDENT*)calloc( htbl->positions ,sizeof(STUDENT));
 
     // rehashing
     for(__uint64 i=0; i<old_positions; i++)
     {
-        if(htbl->table[i].id != 0 && htbl->table[i].id != vacated_mem.id)
+        //if(htbl->table[i].id != 0 && htbl->table[i].id != vacated_mem.id)
+        if(old_table[i].id != 0 && old_table[i].id != vacated_mem.id)
         {    
-            pos = _ohtbl_resizing_insert(htbl,&htbl->table[i]);
+            pos = _ohtbl_resizing_insert(htbl,&old_table[i]);
             if( pos == ERROR )
             {    
                 printf("ERROR");
                 return ERROR;
             }
-            else if(pos != i)   // Set the original id of slot to vacated state when index change
-                htbl->table[i].id = vacated_mem.id;
         }
     }
+    free(old_table);
     return NO_ERROR;
 }
 
@@ -110,7 +120,7 @@ void print_table(OHTBL* htbl)
 int ohtbl_init(OHTBL* htbl, __uint64 positions)
 {
     htbl->threshold = 0.7;
-    htbl->positions = positions*4;
+    htbl->positions = positions*COEFFICIENT;
     
     if( (htbl->table = (STUDENT*)calloc(htbl->positions,sizeof(STUDENT)) ) == NULL)
         return ERROR;
@@ -171,7 +181,7 @@ __uint64 obtbl_remove(OHTBL* htbl, __uint64 remove_id)
     return ERROR;
 }
 
-int ohtbl_lookup(OHTBL* htbl, __uint64 search_id)
+__uint64 ohtbl_lookup(OHTBL* htbl, __uint64 search_id)
 {
     __uint64 position;
 
@@ -185,7 +195,7 @@ int ohtbl_lookup(OHTBL* htbl, __uint64 search_id)
         }
         else if(!_match(htbl->table[position].id, search_id))
         {
-            return FOUND;
+            return position;
         }
     }
     return NOT_FOUND;

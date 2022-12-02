@@ -22,7 +22,7 @@ void print_table(OHTBL* htbl);
 
 __uint64 ohtbl_insert(OHTBL* htbl, STUDENT* data);
 __uint64 obtbl_remove(OHTBL* htbl, __uint64 remove_id);
-int ohtbl_lookup(OHTBL* htbl, __uint64 search_id);
+__uint64 ohtbl_lookup(OHTBL* htbl, __uint64 search_id);
 
 #define ohtbl_size(htbl) ( (htbl)->size )
 #define ohtbl_load_factor(htbl) ( (htbl)->size/(float)((htbl)->positions) )

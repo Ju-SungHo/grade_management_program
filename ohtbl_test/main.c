@@ -33,6 +33,7 @@ int main()
             printf("ID = %lld is Already inserted data\n",member[i].id);
         }
     }
+    printf("%p\n",htbl.table);
     print_table(&htbl);
     free(member);
 
@@ -43,7 +44,7 @@ int main()
     member = (STUDENT*)calloc(1,sizeof(STUDENT));
     member->name[1] = '\0';
 
-
+    
     // Already inserted data check test
     member->id = 20161094;
     err = ohtbl_insert(&htbl,member);
@@ -59,6 +60,7 @@ int main()
     }
 
 
+    printf("%p\n",htbl.table);
     // Resizing test
     for(__uint64 i=0; i<70; i++)
     {
@@ -76,9 +78,11 @@ int main()
             printf("ID = %lld is Already inserted data\n",member->id);
         }
     }
+    printf("%p\n",htbl.table);
     print_table(&htbl);
-
-
+    
+    printf("%p\n",htbl.table);
+    
     // Remove test 2017[from 1001 to 1020]
     for(__uint64 i=0; i<20; i++)
     {
@@ -102,7 +106,7 @@ int main()
 
     // Not exist data check test
     member->id = 20171100;
-
+    printf("%p\n",htbl.table);
     err = obtbl_remove(&htbl,member->id);
     if(err == ERROR)
     {    
