@@ -6,7 +6,7 @@
  *  - member : struct pointer to print the data
  *  - num : Number of Members
 --------------------------------------------------------------------------------- */
-void _print_all(const STUDENT pmember[],__uint64 num)
+void _print_all(const STUDENT pmember[], __uint64 num)
 {
     if(num != NO_DATA)
     {
@@ -31,6 +31,16 @@ void _print_all(const STUDENT pmember[],__uint64 num)
 }
 
 
+
+/* ---------------------------------------------------------------------------------
+ * function name : _search_member
+ * arguments
+ *  - htbl : hash table struct pointer for inserted data searching
+ *  - sorting_mem : array to sort
+ * return value
+ *  - NO_DATA : no data in table
+ *  - NO_ERROR : NO ERROR
+--------------------------------------------------------------------------------- */
 int _search_member(OHTBL* htbl, STUDENT** sorting_mem)
 {
     __uint64 pos=0;
@@ -82,7 +92,7 @@ int print_menu()
 /* ---------------------------------------------------------------------------------
  * function name : print_student
  * arguments
- *  - htbl : Hash Table to print
+ *  - htbl : hash table struct pointer for sorted data print
 --------------------------------------------------------------------------------- */
 void print_student(OHTBL* htbl)
 {
@@ -94,12 +104,11 @@ void print_student(OHTBL* htbl)
 
     while(!mode_err)
     {
-        printf("\n*****출력 방식 선택****** \n");
+        printf("\n *****출력 방식 선택****** \n");
         printf("|     1. 학번순 출력      |\n");
         printf("|     2. 이름순 출력      |\n");
         printf("|     3. 평균순 출력      |\n");
-        printf("|     4. 그대로 출력      |\n");
-        printf(" ************************\n");
+        printf(" *************************\n");
         printf(">> 입력 : ");
         scanf("%hhd",&mode);    _IO_getc(stdin);
 
@@ -121,10 +130,13 @@ void print_student(OHTBL* htbl)
                 free(sorting_mem);
                 mode_err = 1;
                 break;
+            /*
             case 4:
+                // print the table
                 print_table(htbl);
                 mode_err = 1;
                 break;
+            */
             default:
                 printf("해당 메뉴는 없습니다. 다시 선택하세요.\n\n");
         }

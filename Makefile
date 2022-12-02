@@ -35,7 +35,7 @@ $(OBJ_DIR)/%.o : $(SRC_DIR)/%.c
 $(TARGET) : $(OBJECTS)
 	$(CC) $(CFLAGS) $(OBJECTS) -o $(TARGET) $(LDFLAGS)
 
-.PHONY: clean all
+
 clean :
 	rm -r $(OBJECTS) $(DEPS) $(TARGET)
 

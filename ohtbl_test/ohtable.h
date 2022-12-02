@@ -16,6 +16,8 @@ typedef struct _ohtbl
     STUDENT* table;
 }   OHTBL;
 
+
+
 int ohtbl_init(OHTBL* htbl, __uint64 positions);
 int _ohtbl_resizing(OHTBL* htbl);
 void print_table(OHTBL* htbl);

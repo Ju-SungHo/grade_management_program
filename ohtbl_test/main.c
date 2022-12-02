@@ -62,7 +62,7 @@ int main()
 
     printf("%p\n",htbl.table);
     // Resizing test
-    for(__uint64 i=0; i<70; i++)
+    for(__uint64 i=0; i<300; i++)
     {
         member->id = 20171001+i;
         member->name[0] = 'A'+ (i%26);

@@ -16,7 +16,6 @@
 #define NO_DATA -4
 #define NO_ERROR 0
 
-
 typedef unsigned long long __uint64;
 
 typedef struct _student{

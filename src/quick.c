@@ -111,7 +111,7 @@ __uint64 _partition(STUDENT pmember[], unsigned char mode, __uint64 left, __uint
 /* ---------------------------------------------------------------------------------
  * function name : quick_sort
  * arguments
- *  - pmember : struct pointer to reallocate
+ *  - pmember : struct pointer for quick sort
  *  - mode : sort order selected by user
  *  - left : start index of partition
  *  - right : end index of partition

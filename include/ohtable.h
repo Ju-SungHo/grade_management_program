@@ -3,10 +3,6 @@
 
 #include "main.h"
 
-
-__uint64 hash1(__uint64 key);
-__uint64 hash2(__uint64 key);
-
 typedef struct _ohtbl
 {
     __uint64 positions;

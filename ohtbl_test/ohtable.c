@@ -1,5 +1,5 @@
 #include "ohtable.h"
-#define COEFFICIENT 2
+#define COEFFICIENT 4
 
 static STUDENT vacated_mem = {1};
 
@@ -95,6 +95,7 @@ int _ohtbl_resizing(OHTBL* htbl)
             }
         }
     }
+    printf("resizing complete\n");
     free(old_table);
     return NO_ERROR;
 }
