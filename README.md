@@ -92,8 +92,7 @@ Build는 `Makefile`을 이용하여 구성하였습니다.
     
 - **[필요 시 사용] make, clean의 편의를 위한 alias**
  
-    바로 해당 디렉토리로 이동하거나, make ,clean을 할 수 있도록 해주는 alias  
-     
+    해당 디렉토리로 이동하기 또는 이동하여 make ,clean하기를 편하게 할 수 있도록 해주는 `alias`  
     자신이 사용 가능한 편집기(ex. vi/vim, nano, etc)를 사용하여 `~/.bashrc`에 들어가 아래 내용을 붙여넣고  
     `source ~/.bashrc` 실행
     
@@ -155,7 +154,7 @@ grade_management_program$ ./grade_manage
 
 ### 프로그램 구조도
 
-![Untitled 7](https://user-images.githubusercontent.com/84081595/205446986-feeec584-d502-408e-968b-f7871529d8c0.png)
+![Untitled 7](https://user-images.githubusercontent.com/84081595/205458474-10a57ff6-9b48-4633-9c4e-0849eba6a72c.png)
 
 
 
