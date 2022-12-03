@@ -261,7 +261,7 @@ int remove_student(OHTBL* htbl)
         }
         else
         {
-            printf("\n=> 삭제했습니다. ID = %lld, name = %s\n\n", htbl->table[pos].id,htbl->table[pos].name);
+            printf("\n=> 삭제했습니다. ID = %lld, name = %s\n\n", remove_id, htbl->table[pos].name);
         }
     }
     else

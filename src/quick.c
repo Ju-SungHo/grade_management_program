@@ -102,6 +102,7 @@ __uint64 _partition(STUDENT pmember[], unsigned char mode, __uint64 left, __uint
             swap(&pmember[low],&pmember[high]);
     }
 
+
     // pivot기준 최소 최대 partition 정렬이 끝났음으로 pivot과 high 변경
     swap(&pmember[left],&pmember[high]);
     return high;

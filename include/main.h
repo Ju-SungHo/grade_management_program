@@ -21,7 +21,7 @@ typedef unsigned long long __uint64;
 typedef struct _student{
     __uint64 id;
     char name[MAX_NAME_LEN];
-    float grade[3]; // 0:kor, 1:eng, 2:math
+    float grade[MAX_GRADE_NUM]; // 0:kor, 1:eng, 2:math
     float average;
 } STUDENT;
 

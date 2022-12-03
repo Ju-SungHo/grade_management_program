@@ -1,5 +1,5 @@
 #include "ohtable.h"
-#define COEFFICIENT 2
+#define COEFFICIENT 4
 
 static STUDENT vacated_mem = {1};
 
@@ -19,15 +19,14 @@ __uint64 _hash1(__uint64 key)
 }
 
 
-
 // Thomas Wang's hash function
 __uint64 _hash2(__uint64 key)
 {
-	key = ~key + (key << 21);	// key = (key << 21) - key - 1
+	key = ~key + (key << 21);	                // key = (key << 21) - key - 1
 	key ^= (key >> 24);
-	key += (key << 3) + (key << 8);	// key = key * 265
+	key += (key << 3) + (key << 8);	            // key = key * 265
 	key ^= (key >> 14);
-	key += (key << 2) + (key << 4);	// key = key * 21
+	key += (key << 2) + (key << 4);	            // key = key * 21
 	key ^= (key >> 28);
 	key += (key << 31);
 

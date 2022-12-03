@@ -64,6 +64,7 @@ int _search_member(OHTBL* htbl, STUDENT** sorting_mem)
     else
         return NO_DATA;
 
+
     return NO_ERROR;
 }
 
