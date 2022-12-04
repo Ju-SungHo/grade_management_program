@@ -1,7 +1,7 @@
 CC = gcc
 CXXFLAGS = -Wall
-OBJS = ohtable.o main.o 
-EXE=oht_test
+OBJS = ohtable.o manage.o quick.o unit_test.o 
+EXE=unit_test
 
 %.o: %.c
 	$(CC) $(CXXFLAGS) -c $<
