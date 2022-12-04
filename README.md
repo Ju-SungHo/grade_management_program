@@ -29,68 +29,122 @@ Build는 `Makefile`을 이용하여 구성하였습니다.
 
 ```bash
 ~$ cd grade_management_program
+
+# grade_manage program build
 ~/grade_management_program$ make
+
+#unit_test program build
+~/grade_management_program$ make test
 ```
 
 만약, make후 생성 된 [`.o` , `.d` , `grade_manage`]을 삭제하고 싶으면 make clean을 실행하여 제거할 수 있습니다.
 
 ```bash
 ~/grade_management_program$ make clean
-```
+~/grade_management_program$ make tclean
+```  
 
+<details>
+<summary>Makefile 내용</summary>
+<div markdown="1">
 
-- **Makefile**
     ```makefile
     CROSS=
     CC=$(CROSS)gcc 
-    
+
     # C 컴파일러 옵션
     CFLAGS= -Wall
-    
+
     # 링커 옵션
     LDFLAGS=
-    
+
     # 헤더파일 경로
     INCLUDE=-Iinclude/
-    
+
     # 소스 파일 디렉토리
     SRC_DIR=./src
-    
+
     # 오브젝트 파일 디렉토리
     OBJ_DIR=./obj
-    
+
+    # 테스트 파일 디렉토리
+    TEST_DIR=./test_code
+
     # 생성하고자 하는 실행 파일 이름
     TARGET=grade_manage
-    
+
+    # 테스트 파일 이름 
+    TEST_TARGET=unit_test
+
+
+
     # Make 할 소스 파일들
-    # wildcard 로 SRC_DIR 에서 *.c 로 된 파일들 목록을 뽑아낸 뒤에
+    # wildcard 로 SRC_DIR 에서 *.cc 로 된 파일들 목록을 뽑아낸 뒤에
     # notdir 로 파일 이름만 뽑아낸다.
+    # (e.g SRCS 는 foo.cc bar.cc main.cc 가 된다.)
     SRCS=$(notdir $(wildcard $(SRC_DIR)/*.c))
     OBJS=$(SRCS:.c=.o)
-    
-    # # OBJS 안의 object 파일들 이름 앞에 $(OBJ_DIR)/ 을 붙인다. = $(OBJ_DIR)/$(OBJS)
+
+    # OBJS 안의 object 파일들 이름 앞에 $(OBJ_DIR)/ 을 붙인다. = $(OBJ_DIR)/$(OBJS)
     OBJECTS=$(patsubst %.o,$(OBJ_DIR)/%.o,$(OBJS))
     DEPS=$(OBJECTS:.o=.d)
-    
+
+
+    # unit test를 위한 SRC, OBJS, DEPS 파일들
+    TEST_SRCS=manage.c ohtable.c quick.c unit_test.c
+    TEST_OBJS=$(TEST_SRCS:.c=.o)
+
+    # TEST_OBJS들 앞에 $(ONJ_SIR)/을 붙인다.
+    TEST_OBJECTS=$(patsubst %.o,$(OBJ_DIR)/%.o,$(TEST_OBJS))
+    TEST_DEPS=$(TEST_OBJECTS:.o=.d)
+
+
     all : $(TARGET)
-    
-    $(OBJ_DIR)/%.o : $(SRC_DIR)/%.c
-    	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@ -MD $(LDFLAGS)
-    
+
+        $(OBJ_DIR)/%.o : $(SRC_DIR)/%.c
+	    $(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@ -MD $(LDFLAGS)
+
     $(TARGET) : $(OBJECTS)
     	$(CC) $(CFLAGS) $(OBJECTS) -o $(TARGET) $(LDFLAGS)
-    
+
+
+    test : $(TEST_TARGET)
+
+    $(OBJ_DIR)/%.o : $(TEST_DIR)/%.c 
+	    $(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@ -MD $(LDFLAGS)
+
+    $(OBJ_DIR)/%.o : $(SRC_DIR)/%.c 
+	    $(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@ -MD $(LDFLAGS)
+
+    $(TEST_TARGET) : $(TEST_OBJECTS)
+    	$(CC) $(CFLAGS) $(TEST_OBJECTS) -o $(TEST_TARGET) $(LDFLAGS)
+
+
+    tclean :
+	    rm -r $(TEST_OBJECTS) $(TEST_DEPS) $(TEST_TARGET) 
+
     clean :
-    	rm -r $(OBJECTS) $(DEPS) $(TARGET)
-    
+	    rm -r $(OBJECTS) $(DEPS) $(TARGET) 
+
+
     -include $(DEPS)
     ```
-    
-- **Build 결과**  
+</div>
+</details>
 
-    <img src="https://user-images.githubusercontent.com/84081595/205446829-c14dadf1-6cb5-47d8-b48c-e525fcac3f3e.png"  width="550" height="200"/>
     
-- **[필요 시 사용] make, clean의 편의를 위한 alias**
+    
+- `grade_manage` Build 결과  
+
+    <img src="https://user-images.githubusercontent.com/84081595/205446829-c14dadf1-6cb5-47d8-b48c-e525fcac3f3e.png"  width="550" height="200"/>  
+    
+- `unit_test' Build 결과  
+
+    <img src="https://user-images.githubusercontent.com/84081595/205478051-54c3a7b0-337a-4414-bc1b-d3fc51fe4861.png"  width="550" height="160"/>
+    
+
+    
+- **[필요 시 사용]** make, clean의 편의를 위한 alias
  
     해당 디렉토리로 이동하기 또는 이동하여 make ,clean하기를 편하게 할 수 있도록 해주는 `alias`  
     자신이 사용 가능한 편집기(ex. vi/vim, nano, etc)를 사용하여 `~/.bashrc`에 들어가 아래 내용을 붙여넣고  
@@ -99,16 +153,23 @@ Build는 `Makefile`을 이용하여 구성하였습니다.
     ```bash
     alias gmake='cd ~/grade_management_program; sudo make'
     alias gmclean='cd ~/grade_management_program; sudo make clean'
-    alias gcd='cd ~/grade_management_program'
+    alias gmcd='cd ~/grade_management_program'
+    alias gmtest='cd ~/grade_management_program; sudo make test'
+    alias gmtclean='cd ~/grade_management_program; sudo make tclean'
+    
     # 만약 다른 디렉토리에 이 repository를 받았으면 "~/{directory}" 부분만 환경에 맞게 바꿔주면 된다.
     ```
-
-    <img src="https://user-images.githubusercontent.com/84081595/205446865-f61d89cc-5c7d-4ffc-98b8-b2f7368c26e4.png"  width="400" height="90"/>
+    
+    - `gcd` **사용 결과**  
+    
+        <img src="https://user-images.githubusercontent.com/84081595/205446865-f61d89cc-5c7d-4ffc-98b8-b2f7368c26e4.png"  width="400" height="90"/>
     
 
     
 
-# 2. 프로그램 실행 방법
+# 2. 프로그램 실행 방법  
+
+### grade_manage 프로그램 실행 
 
 `grade_management_program` 디렉토리에 생성된 프로그램인 `grade_manage`을 실행시키면 아래 사진과 같이 사용할 수 있는 메뉴들이 터미널창에 출력되고 입력을 기다리게 됩니다.
 
@@ -148,8 +209,14 @@ grade_management_program$ ./grade_manage
 
         [**변경된 사항**]이 있으면 파일에 저장한 후 종료하고 없으면 바로 종료한다.
         
-        <img src="https://user-images.githubusercontent.com/84081595/205446960-a1001dde-90d4-4f7b-9a5c-cedca54d1930.png"  width="270" height="160"/>
+        <img src="https://user-images.githubusercontent.com/84081595/205446960-a1001dde-90d4-4f7b-9a5c-cedca54d1930.png"  width="270" height="160"/>  
         
+### unit_test 프로그램 실행  
+
+`grade_management_program` 디렉토리에 생성된 `unit_test` 프로그램을 싱행시키기 위해서는 아래의 명령어를 실행하면 됩니다.
+    
+
+
 # 3. 프로그램 구조
 
 ### 프로그램 구조도
