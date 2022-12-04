@@ -4,6 +4,8 @@
     - [Clone](#clone)
     - [Build](#build)
 2. [프로그램 실행 방법](#2-프로그램-실행-방법)
+	- [grade_manage 프로그램 실행](#grade_manage-프로그램-실행)
+	- [unit_test 프로그램 실행](#unit_test-프로그램-실행)	
 3. [프로그램 구조](#3-프로그램-구조)
     - [프로그램 구조도](#프로그램-구조도)
     - [자료구조 및 알고리즘](#자료구조-및-알고리즘)
@@ -37,11 +39,11 @@ Build는 `Makefile`을 이용하여 구성하였습니다.
 ~/grade_management_program$ make test
 ```
 
-만약, make후 생성 된 [`.o` , `.d` , `grade_manage`]을 삭제하고 싶으면 make clean을 실행하여 제거할 수 있습니다.
+만약, make후 생성 된 [`.o` , `.d` , `grade_manage` , 'unit_test']을 삭제하고 싶으면 make clean을 실행하여 제거할 수 있습니다.
 
 ```bash
-~/grade_management_program$ make clean
-~/grade_management_program$ make tclean
+~/grade_management_program$ make clean	# grade_manage
+~/grade_management_program$ make tclean	# unit_test
 ```  
 
 <details>
@@ -160,7 +162,7 @@ Build는 `Makefile`을 이용하여 구성하였습니다.
     # 만약 다른 디렉토리에 이 repository를 받았으면 "~/{directory}" 부분만 환경에 맞게 바꿔주면 된다.
     ```
     
-    - `gcd` **사용 결과**  
+    - `gcd` 사용 결과 
     
         <img src="https://user-images.githubusercontent.com/84081595/205446865-f61d89cc-5c7d-4ffc-98b8-b2f7368c26e4.png"  width="400" height="90"/>
     
@@ -175,46 +177,49 @@ Build는 `Makefile`을 이용하여 구성하였습니다.
 
 ```bash
 ~$ cd grade_management_program
-grade_management_program$ ./grade_manage
+~/grade_management_program$ ./grade_manage
 ```
 
 - **실행 화면**
     
     사용할 기능에 대한 입력은 메뉴 앞에 나와있는 번호를 입력해 주면 됩니다.  
-    [ 1 : 정보 출력, 2 : 정보 입력, 3 : 정보 삭제, 4 : 프로그램 종료 ]
-    
+    [ 1 : 정보 출력, 2 : 정보 입력, 3 : 정보 삭제, 4 : 프로그램 종료 ]  
     <img src="https://user-images.githubusercontent.com/84081595/205446924-21c9ec8b-03a8-4000-962d-017a099c59b6.png"  width="500" height="250"/>
     
 - **각 기능 별 설명**  
     1.  **학생 정보 출력**  
 
         [**학번순, 이름순, 평균순**] 3가지 정렬 기준이 있고, 원하는 정렬 기준에 대한 번호를 입력하면   
-        그에 맞춰 정렬 후 출력해 준다. 
-        
+        그에 맞춰 정렬 후 출력해 준다.   
         <img src="https://user-images.githubusercontent.com/84081595/205446935-a1fa56af-4f5e-4107-af1a-dc594e9ed548.png"  width="270" height="160"/>
         
     2.  **학생 정보 입력**  
 
-        [**입력할 학생의 수, 학생의 정보**]를 입력받아 학생 정보를 저장한다.
-        
+        [**입력할 학생의 수, 학생의 정보**]를 입력받아 학생 정보를 저장한다.  
         <img src="https://user-images.githubusercontent.com/84081595/205446945-2069c8b0-9676-48d3-9d3f-b2f5da3820af.png"  width="550" height="250"/>
     
     3.  **학생 정보 삭제**  
 
-        [**삭제할 학생의 학번**]을 입력받아 학생 정보를 삭제한다.
-        
+        [**삭제할 학생의 학번**]을 입력받아 학생 정보를 삭제한다.  
         <img src="https://user-images.githubusercontent.com/84081595/205446955-109cdf36-199c-4d7f-a6d9-258f22ea79b2.png"  width="550" height="150"/>
         
     4.  **프로그램 종료**  
 
-        [**변경된 사항**]이 있으면 파일에 저장한 후 종료하고 없으면 바로 종료한다.
+        [**변경된 사항**]이 있으면 파일에 저장한 후 종료하고 없으면 바로 종료한다.  
+        <img src="https://user-images.githubusercontent.com/84081595/205446960-a1001dde-90d4-4f7b-9a5c-cedca54d1930.png"  width="270" height="160"/>    
         
-        <img src="https://user-images.githubusercontent.com/84081595/205446960-a1001dde-90d4-4f7b-9a5c-cedca54d1930.png"  width="270" height="160"/>  
-        
+
 ### unit_test 프로그램 실행  
 
 `grade_management_program` 디렉토리에 생성된 `unit_test` 프로그램을 싱행시키기 위해서는 아래의 명령어를 실행하면 됩니다.
-    
+	
+```bash
+~$ cd grade_management_program
+~/grade_management_program$ ./unit_test
+```
+	
+   - **실행 화면**  
+		<img src="https://user-images.githubusercontent.com/84081595/205478867-eef9c221-ed75-4888-a1be-66ccb7494765.png"  width="700" height="250"/> 
 
 
 # 3. 프로그램 구조
