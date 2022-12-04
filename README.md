@@ -18,7 +18,7 @@
 성적 관리 프로그램 repository를 `grade_management_program` 디렉토리에 clone.
 
 ```bash
-~$ git clone https://github.com/Juwayne/grade_management_program.git grade_management_program
+git clone https://github.com/Juwayne/grade_management_program.git grade_management_program
 ```
 
 ### Build
@@ -31,21 +31,23 @@ Build는 `Makefile`을 이용하여 구성하였습니다.
 프로그램의 루트 디렉토리인 `grade_management_program` 디렉토리에서 `make` 를실행하여 Build할 수 있습니다.
 
 ```bash
-~$ cd grade_management_program
+cd grade_management_program
 
 # grade_manage program build
-~/grade_management_program$ make
+make
 
 #unit_test program build
-~/grade_management_program$ make test
+make test
 ```
 
 만약, make후 생성 된 [`.o` , `.d` , `grade_manage` , 'unit_test']을 삭제하고 싶으면 make clean을 실행하여 제거할 수 있습니다.
 
 ```bash
-~/grade_management_program$ make clean	# grade_manage
-~/grade_management_program$ make tclean	# unit_test
+make clean	# grade_manage
 ```  
+```bash
+make tclean	# unit_test
+```
 
 <details>
 <summary>Makefile 내용</summary>
@@ -177,8 +179,8 @@ Build는 `Makefile`을 이용하여 구성하였습니다.
 `grade_management_program` 디렉토리에 생성된 프로그램인 `grade_manage`을 실행시키면 아래 사진과 같이 사용할 수 있는 메뉴들이 터미널창에 출력되고 입력을 기다리게 됩니다.
 
 ```bash
-~$ cd grade_management_program
-~/grade_management_program$ ./grade_manage
+cd grade_management_program
+./grade_manage
 ```
 
 - **실행 화면**
@@ -215,8 +217,8 @@ Build는 `Makefile`을 이용하여 구성하였습니다.
 `grade_management_program` 디렉토리에 생성된 `unit_test` 프로그램을 싱행시키기 위해서는 아래의 명령어를 실행하면 됩니다.
 	
 ```bash
-~$ cd grade_management_program
-~/grade_management_program$ ./unit_test
+cd grade_management_program
+./unit_test
 ```
 	
    - **실행 화면**  
