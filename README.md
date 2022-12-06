@@ -40,7 +40,7 @@ make
 make test
 ```
 
-만약, make후 생성 된 [`.o` , `.d` , `grade_manage` , 'unit_test']을 삭제하고 싶으면 make clean을 실행하여 제거할 수 있습니다.
+만약, make후 생성 된 [`.o` , `.d` , `grade_manage` , `unit_test`]을 삭제하고 싶으면 make clean을 실행하여 제거할 수 있습니다.
 
 ```bash
 make clean	# grade_manage
@@ -143,7 +143,7 @@ make tclean	# unit_test
 
     <img src="https://user-images.githubusercontent.com/84081595/205446829-c14dadf1-6cb5-47d8-b48c-e525fcac3f3e.png"  width="550" height="200"/>  
     
-- `unit_test' Build 결과  
+- `unit_test` Build 결과  
 
     <img src="https://user-images.githubusercontent.com/84081595/205478051-54c3a7b0-337a-4414-bc1b-d3fc51fe4861.png"  width="550" height="160"/>
     
@@ -158,7 +158,7 @@ make tclean	# unit_test
     ```bash
     alias gmake='cd ~/grade_management_program; sudo make'
     alias gmclean='cd ~/grade_management_program; sudo make clean'
-    alias gmcd='cd ~/grade_management_program'
+    alias gcd='cd ~/grade_management_program'
     alias gmtest='cd ~/grade_management_program; sudo make test'
     alias gmtclean='cd ~/grade_management_program; sudo make tclean'
     
@@ -229,7 +229,8 @@ cd grade_management_program
 
 ### 프로그램 구조도
 
-![Untitled 7](https://user-images.githubusercontent.com/84081595/205458474-10a57ff6-9b48-4633-9c4e-0849eba6a72c.png)
+![Untitled 7](https://user-images.githubusercontent.com/84081595/205902173-9c3225ab-87d8-4b31-8862-8a88bece2786.png)
+
 
 
 
@@ -247,7 +248,7 @@ cd grade_management_program
         position = ( _hash1(data->id) + (i * _hash2(data->id)) ) % htbl->positions;
         ~~~  
     
-    - **Table Resizing** : load factor threshold를 70%로 설정하였고, 이를 넘길 시 load factor가 약 25%가 되도록 resizing을 진행한다.
+    - **Table Resizing** : load factor threshold를 70%로 설정하였고, 이를 넘길 시 load factor가 약 20%가 되도록 resizing을 진행한다.
         ~~~c
         // ohtbl_insert function
         if( ohtbl_load_factor(htbl) >= htbl->threshold )
