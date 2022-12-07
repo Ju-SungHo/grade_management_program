@@ -84,9 +84,9 @@ make tclean	# unit_test
 
 
     # Make 할 소스 파일들
-    # wildcard 로 SRC_DIR 에서 *.cc 로 된 파일들 목록을 뽑아낸 뒤에
+    # wildcard 로 SRC_DIR 에서 *.c 로 된 파일들 목록을 뽑아낸 뒤에
     # notdir 로 파일 이름만 뽑아낸다.
-    # (e.g SRCS 는 foo.cc bar.cc main.cc 가 된다.)
+    # (e.g SRCS 는 foo.c bar.c main.c 가 된다.)
     SRCS=$(notdir $(wildcard $(SRC_DIR)/*.c))
     OBJS=$(SRCS:.c=.o)
 
